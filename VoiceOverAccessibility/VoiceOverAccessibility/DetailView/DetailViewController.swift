@@ -42,6 +42,7 @@ class DetailViewController: IUIViewController {
         setupStackView()
 
         element.accessibilityUIView().forEach{item in
+            item.delegate = self
             addItem(newItem: item)
         }
         addItem(newItem: element.defaultUIKit())
@@ -80,6 +81,13 @@ class DetailViewController: IUIViewController {
         // Adjust scrollView contentSize
         let contentHeight = stackView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
         scrollView.contentSize = CGSize(width: scrollView.frame.width, height: contentHeight + 40) // Add padding
+    }
+}
+
+extension DetailViewController : ElementViewDelegate{
+    func viewCodeTapped() {
+        let vc = CodeViewController(codeString: element.accessibilityCode)
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 

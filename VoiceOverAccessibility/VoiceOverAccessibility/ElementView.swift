@@ -7,7 +7,9 @@
 
 import UIKit
 
-import UIKit
+protocol ElementViewDelegate : AnyObject {
+    func viewCodeTapped()
+}
 
 class ElementView<T: UIView>: UIView {
     private let titleLabel : UILabel = {
@@ -44,6 +46,7 @@ class ElementView<T: UIView>: UIView {
     }()
 
     private let showViewCode : Bool
+    weak var delegate : ElementViewDelegate?
 
     init(title: String, element: T, description: String, showViewCode: Bool) {
         self.element = element
@@ -63,8 +66,7 @@ class ElementView<T: UIView>: UIView {
     }
 
     private func setupViews() {
-
-        viewCodeButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        viewCodeButton.addTarget(self, action: #selector(viewCodeButtonTapped), for: .touchUpInside)
 
         addSubview(titleLabel)
         addSubview(divider)
@@ -119,8 +121,9 @@ class ElementView<T: UIView>: UIView {
         }
     }
 
-    @objc private func buttonTapped() {
+    @objc private func viewCodeButtonTapped() {
         print("Button tapped!")
+        delegate?.viewCodeTapped()
     }
 }
 #Preview{

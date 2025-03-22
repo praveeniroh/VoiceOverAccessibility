@@ -98,4 +98,42 @@ extension UIElement{
         }
         return ElementView(title: "", element: UIView() as! T, description: "", showViewCode: false)
     }
+
+    var accessibilityCode : String {
+        switch self{
+        case .button:
+            return """
+            let button2 = UIButton()
+            button2.setImage(UIImage(systemName: "square.and.pencil"), for: .normal)
+            button2.backgroundColor = .green
+            button2.clipsToBounds = true
+            button2.layer.cornerRadius = 10
+            button2.accessibilityLabel = "Edit"
+            button2.accessibilityHint = "Edits data"
+            """
+        case .switchElement:
+            break
+        case .slider:
+            break
+        case .stepper:
+            break
+        case .segmentedControl:
+            break
+        case .pageControl:
+            break
+        case .textField:
+            break
+        case .imageView:
+            break
+        case .label:
+            break
+        case .textView:
+            break
+        case .tableView:
+            break
+        case .customView:
+            break
+        }
+        return ""
+    }
 }

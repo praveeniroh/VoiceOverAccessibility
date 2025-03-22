@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		62BD47042D8EEEA10079E697 /* Highlightr in Frameworks */ = {isa = PBXBuildFile; productRef = 62BD47032D8EEEA10079E697 /* Highlightr */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		626122852D8BA78900E104A7 /* VoiceOverAccessibility.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VoiceOverAccessibility.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				62BD47042D8EEEA10079E697 /* Highlightr in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +83,7 @@
 			);
 			name = VoiceOverAccessibility;
 			packageProductDependencies = (
+				62BD47032D8EEEA10079E697 /* Highlightr */,
 			);
 			productName = VoiceOverAccessibility;
 			productReference = 626122852D8BA78900E104A7 /* VoiceOverAccessibility.app */;
@@ -107,6 +113,9 @@
 			);
 			mainGroup = 6261227C2D8BA78900E104A7;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				62BD47022D8EEEA10079E697 /* XCRemoteSwiftPackageReference "Highlightr" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 626122862D8BA78900E104A7 /* Products */;
 			projectDirPath = "";
@@ -333,6 +342,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		62BD47022D8EEEA10079E697 /* XCRemoteSwiftPackageReference "Highlightr" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/raspu/Highlightr";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		62BD47032D8EEEA10079E697 /* Highlightr */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 62BD47022D8EEEA10079E697 /* XCRemoteSwiftPackageReference "Highlightr" */;
+			productName = Highlightr;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6261227D2D8BA78900E104A7 /* Project object */;
 }
