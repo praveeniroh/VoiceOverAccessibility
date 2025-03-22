@@ -7,12 +7,19 @@
 
 import UIKit
 
-class ContainerViewController: UIViewController {
+class ContainerViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         view.backgroundColor = .systemMint
+
+        viewControllers = [
+            INavigationController(rootViewController: UIKitViewController()),
+            INavigationController(rootViewController: SwiftUIViewController())
+        ]
+
+        tabBar.backgroundColor = .systemGray6
     }
 
 
