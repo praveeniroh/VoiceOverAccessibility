@@ -45,7 +45,18 @@ extension UIElement{
             let e1 = ElementView(title: title, element: uiSwitch as! T, description: "UISwitch mostly used in UITableViewCell. For demo purpose i've shown separately", showViewCode: true)
             return [e1]
         case .slider:
-            break
+            let slider = UISlider()
+            slider.maximumValue = 100
+            slider.minimumValue = 0
+            slider.maximumTrackTintColor = .systemGray6
+            slider.minimumTrackTintColor = .systemGreen
+            slider.minimumValueImage = UIImage(systemName: "speaker.fill")
+            slider.maximumValueImage = UIImage(systemName: "speaker.wave.3.fill")
+            slider.accessibilityLabel = "Volume slider"
+            slider.accessibilityHint = "Adjusts the volume"
+            slider.value = 50
+            let e1 = ElementView(title: title, element: slider as! T, description: "Since the default trait type is .adjustable, the \"Adjust Value\" rotor action is available and selected by default when focusing on a UISlider.", showViewCode: true)
+            return [e1]
         case .stepper:
             break
         case .segmentedControl:
@@ -86,7 +97,16 @@ extension UIElement{
             uiSwitch.onTintColor = .systemGreen
             return ElementView(title: title, element: uiSwitch as! T, description: "", showViewCode: false)
         case .slider:
-            break
+            let slider = UISlider()
+            slider.maximumValue = 100
+            slider.minimumValue = 0
+            slider.maximumTrackTintColor = .systemGray6
+            slider.minimumTrackTintColor = .systemGreen
+            slider.minimumValueImage = UIImage(systemName: "speaker.fill")
+            slider.maximumValueImage = UIImage(systemName: "speaker.wave.3.fill")
+            slider.value = 50
+
+            return ElementView(title: title, element: slider as! T, description: "", showViewCode: false)
         case .stepper:
             break
         case .segmentedControl:
@@ -130,7 +150,18 @@ extension UIElement{
             uiSwitch.accessibilityHint = "Turns on airplane mode"
             """
         case .slider:
-            break
+            return """
+            let slider = UISlider()
+            slider.maximumValue = 100
+            slider.minimumValue = 0
+            slider.maximumTrackTintColor = .systemGray6
+            slider.minimumTrackTintColor = .systemGreen
+            slider.minimumValueImage = UIImage(systemName: "speaker.fill")
+            slider.maximumValueImage = UIImage(systemName: "speaker.wave.3.fill")
+            slider.value = 50
+            slider.accessibilityLabel = "Volume slider"
+            slider.accessibilityHint = "Adjusts the volume"
+            """
         case .stepper:
             break
         case .segmentedControl:
