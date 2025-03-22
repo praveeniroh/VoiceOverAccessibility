@@ -102,9 +102,10 @@ class ElementView<T: UIView>: UIView {
         center.priority = .defaultLow
         center.isActive = true
 
-        let width = element.widthAnchor.constraint(greaterThanOrEqualToConstant: 150)
-//        width.priority = .defaultLow
-        width.isActive = true
+        if element is UIButton{
+            let width = element.widthAnchor.constraint(greaterThanOrEqualToConstant: 150)
+            width.isActive = true
+        }
 
         if showViewCode{
             addSubview(viewCodeButton)

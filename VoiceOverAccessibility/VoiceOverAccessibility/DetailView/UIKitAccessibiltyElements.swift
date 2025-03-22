@@ -36,7 +36,14 @@ extension UIElement{
             return [e1,e2]
 
         case .switchElement:
-            break
+            let uiSwitch = UISwitch()
+            uiSwitch.isOn = true
+            uiSwitch.onTintColor = .systemGreen
+            uiSwitch.accessibilityLabel = "Aeroplane mode"
+            uiSwitch.accessibilityHint = "Turns on airplane mode"
+
+            let e1 = ElementView(title: title, element: uiSwitch as! T, description: "UISwitch mostly used in UITableViewCell. For demo purpose i've shown separately", showViewCode: true)
+            return [e1]
         case .slider:
             break
         case .stepper:
@@ -74,7 +81,10 @@ extension UIElement{
             button.layer.cornerRadius = 10
             return ElementView(title: title, element: button as! T, description: "", showViewCode: false)
         case .switchElement:
-            break
+            let uiSwitch = UISwitch()
+            uiSwitch.isOn = true
+            uiSwitch.onTintColor = .systemGreen
+            return ElementView(title: title, element: uiSwitch as! T, description: "", showViewCode: false)
         case .slider:
             break
         case .stepper:
@@ -112,7 +122,13 @@ extension UIElement{
             button2.accessibilityHint = "Edits data"
             """
         case .switchElement:
-            break
+            return """
+            let uiSwitch = UISwitch()
+            uiSwitch.isOn = true
+            uiSwitch.onTintColor = .systemGreen
+            uiSwitch.accessibilityLabel = "Aeroplane mode"
+            uiSwitch.accessibilityHint = "Turns on airplane mode"
+            """
         case .slider:
             break
         case .stepper:
