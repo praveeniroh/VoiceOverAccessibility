@@ -5,6 +5,12 @@
 //  Created by praveen-12298 on 22/03/25.
 //
 
+import UIKit
+
+enum Framework{
+    case UIKit
+    case SwiftUI
+}
 
 enum UIElement{
     case button
@@ -87,9 +93,5 @@ enum UIElement{
             return swiftUITitle
         }
     }
-}
 
-enum Framework{
-    case UIKit
-    case SwiftUI
 }
