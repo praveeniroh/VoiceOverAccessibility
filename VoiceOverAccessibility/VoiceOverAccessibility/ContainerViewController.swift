@@ -19,7 +19,11 @@ class ContainerViewController: UITabBarController {
             INavigationController(rootViewController: SwiftUIViewController())
         ]
 
-        tabBar.backgroundColor = .systemGray6
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .systemGray6
+        tabBar.standardAppearance = appearance
+        tabBar.scrollEdgeAppearance = appearance
     }
 
 
