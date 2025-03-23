@@ -72,7 +72,17 @@ extension UIElement{
             return [e1]
 
         case .pageControl:
-            break
+            let pageControl = UIPageControl()
+            pageControl.numberOfPages = 5
+            pageControl.currentPage = 0
+            pageControl.translatesAutoresizingMaskIntoConstraints = false
+            pageControl.pageIndicatorTintColor = .secondaryLabel
+            pageControl.currentPageIndicatorTintColor = .systemBlue
+
+            pageControl.accessibilityLabel = "Offers Pages"
+            pageControl.accessibilityHint = "Changes different offers card "
+            let e1 = ElementView(title: title, element:  pageControl as! T, description: "By default value announced Properly.In this example, custom labe and hint set", showViewCode: true)
+            return [e1]
         case .textField:
             break
         case .imageView:
@@ -124,7 +134,15 @@ extension UIElement{
             segmentedControl.selectedSegmentIndex = 0
             return ElementView(title: title, element: segmentedControl as! T, description: "", showViewCode: false)
         case .pageControl:
-            break
+            let pageControl = UIPageControl()
+            pageControl.numberOfPages = 5
+            pageControl.currentPage = 0
+            pageControl.translatesAutoresizingMaskIntoConstraints = false
+            pageControl.pageIndicatorTintColor = .secondaryLabel
+            pageControl.currentPageIndicatorTintColor = .systemBlue
+
+            let e1 = ElementView(title: title, element:  pageControl as! T, description: "Custom accessibility configuration is igonre for UISegmentedControl. Provided Label, hint, and trait are ignored.", showViewCode: true)
+            return e1
         case .textField:
             break
         case .imageView:
@@ -196,7 +214,17 @@ extension UIElement{
             segmentedControl.accessibilityHint = "Swipe left or right to select an option.
             """
         case .pageControl:
-            break
+            return """
+            let pageControl = UIPageControl()
+            pageControl.numberOfPages = 5
+            pageControl.currentPage = 0
+            pageControl.translatesAutoresizingMaskIntoConstraints = false
+            pageControl.pageIndicatorTintColor = .secondaryLabel
+            pageControl.currentPageIndicatorTintColor = .systemBlue
+
+            pageControl.accessibilityLabel = "Offers Pages"
+            pageControl.accessibilityHint = "Changes different offers card "
+"""
         case .textField:
             break
         case .imageView:
