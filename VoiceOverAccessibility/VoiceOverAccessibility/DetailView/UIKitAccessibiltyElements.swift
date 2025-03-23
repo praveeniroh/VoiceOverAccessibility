@@ -155,7 +155,16 @@ extension UIElement{
         case .tableView:
             break
         case .customView:
-            break
+            let customView = CustomButtonView()
+
+            //Accessibility Configs
+            customView.isAccessibilityElement = true
+            customView.accessibilityLabel = "Profile view"
+            customView.accessibilityTraits = [.button]
+            customView.accessibilityHint = "Updates profile image"
+
+            let e1 = ElementView(title: title, element:  customView as! T, description: "Wraped all subviews as a single accessibility element.Provided custom label,hint and trait", showViewCode: true)
+            return [e1]
         }
         return []
     }
@@ -244,7 +253,9 @@ extension UIElement{
         case .tableView:
             break
         case .customView:
-            break
+            let customView = CustomButtonView()
+            let e1 = ElementView(title: title, element:  customView as! T, description: "", showViewCode: false)
+            return e1
         }
         return ElementView(title: "", element: UIView() as! T, description: "", showViewCode: false)
     }
@@ -373,7 +384,15 @@ extension UIElement{
         case .tableView:
             break
         case .customView:
-            break
+            return """
+            let customView = CustomButtonView()
+
+            //Accessibility Configs
+            customView.isAccessibilityElement = true
+            customView.accessibilityLabel = "Profile view"
+            customView.accessibilityTraits = [.button]
+            customView.accessibilityHint = "Updates profile image"
+            """
         }
         return ""
     }
