@@ -84,7 +84,18 @@ extension UIElement{
             let e1 = ElementView(title: title, element:  pageControl as! T, description: "By default value announced Properly.In this example, custom labe and hint set", showViewCode: true)
             return [e1]
         case .textField:
-            break
+            let textField = UITextField()
+            textField.placeholder = "Enter search text"
+            textField.borderStyle = .roundedRect
+
+            // Accessibility Configuration
+            textField.isAccessibilityElement = true
+            textField.accessibilityLabel = "Text Input Field"
+            textField.accessibilityHint = "Search contact records"
+            textField.accessibilityTraits = .searchField
+
+            let e1 = ElementView(title: title, element:  textField as! T, description: "In this example, custom label,trait and hint set", showViewCode: true)
+            return [e1]
         case .imageView:
             break
         case .label:
@@ -141,10 +152,16 @@ extension UIElement{
             pageControl.pageIndicatorTintColor = .secondaryLabel
             pageControl.currentPageIndicatorTintColor = .systemBlue
 
-            let e1 = ElementView(title: title, element:  pageControl as! T, description: "Custom accessibility configuration is igonre for UISegmentedControl. Provided Label, hint, and trait are ignored.", showViewCode: true)
+            let e1 = ElementView(title: title, element:  pageControl as! T, description: "", showViewCode: true)
             return e1
         case .textField:
-            break
+            let textField = UITextField()
+            textField.placeholder = "Enter search text"
+            textField.borderStyle = .roundedRect
+            textField.translatesAutoresizingMaskIntoConstraints = false
+
+            let e1 = ElementView(title: title, element:  textField as! T, description: "", showViewCode: false)
+            return e1
         case .imageView:
             break
         case .label:
@@ -226,7 +243,18 @@ extension UIElement{
             pageControl.accessibilityHint = "Changes different offers card "
 """
         case .textField:
-            break
+            return """
+            let textField = UITextField()
+            textField.placeholder = "Enter search text"
+            textField.borderStyle = .roundedRect
+            textField.translatesAutoresizingMaskIntoConstraints = false
+
+            // Accessibility Configuration
+            textField.isAccessibilityElement = true
+            textField.accessibilityLabel = "Text Input Field"
+            textField.accessibilityHint = "Search contact records"
+            textField.accessibilityTraits = .searchField
+"""
         case .imageView:
             break
         case .label:
