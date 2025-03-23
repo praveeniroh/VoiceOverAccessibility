@@ -97,7 +97,30 @@ extension UIElement{
             let e1 = ElementView(title: title, element:  textField as! T, description: "In this example, custom label,trait and hint set", showViewCode: true)
             return [e1]
         case .imageView:
-            break
+            let imageView = UIImageView(image: UIImage(resource: .profile))
+            imageView.translatesAutoresizingMaskIntoConstraints = true
+            imageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+            imageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+
+            // Accessibility Configuration
+            imageView.isAccessibilityElement = true
+            imageView.accessibilityLabel = "Profile image"
+            imageView.accessibilityHint = "Double tap to edit profile"
+            imageView.accessibilityTraits = [.image,.button]
+
+            let imageView2 = UIImageView(image: UIImage(resource: .decorative))
+            imageView2.translatesAutoresizingMaskIntoConstraints = true
+            imageView2.heightAnchor.constraint(equalToConstant: 100).isActive = true
+            imageView2.widthAnchor.constraint(equalToConstant: 100).isActive = true
+
+            // Accessibility Configuration
+            imageView2.isAccessibilityElement = false
+
+            let e1 = ElementView(title: title, element:  imageView as! T, description: "In this example, custom label,trait and hint set", showViewCode: true)
+
+            let e2 = ElementView(title: title, element:  imageView2 as! T, description: "For purly decorative images, we can turn off the accessibiltiy", showViewCode: true)
+
+            return [e1,e2]
         case .label:
             break
         case .textView:
@@ -163,7 +186,13 @@ extension UIElement{
             let e1 = ElementView(title: title, element:  textField as! T, description: "", showViewCode: false)
             return e1
         case .imageView:
-            break
+            let imageView = UIImageView(image: UIImage(resource: .profile))
+            imageView.translatesAutoresizingMaskIntoConstraints = true
+            imageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+            imageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+
+            let e1 = ElementView(title: title, element:  imageView as! T, description: "", showViewCode: false)
+            return e1
         case .label:
             break
         case .textView:
@@ -256,7 +285,18 @@ extension UIElement{
             textField.accessibilityTraits = .searchField
 """
         case .imageView:
-            break
+            return """
+            let imageView = UIImageView(image: UIImage(resource: .profile))
+            imageView.translatesAutoresizingMaskIntoConstraints = true
+            imageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+            imageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+
+            // Accessibility Configuration
+            imageView.isAccessibilityElement = true
+            imageView.accessibilityLabel = "Profile image"
+            imageView.accessibilityHint = "Double tap to edit profile"
+            imageView.accessibilityTraits = [.image,.button]
+"""
         case .label:
             break
         case .textView:
