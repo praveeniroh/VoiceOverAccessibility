@@ -118,11 +118,21 @@ extension UIElement{
 
             let e1 = ElementView(title: title, element:  imageView as! T, description: "In this example, custom label,trait and hint set", showViewCode: true)
 
-            let e2 = ElementView(title: title, element:  imageView2 as! T, description: "For purly decorative images, we can turn off the accessibiltiy", showViewCode: true)
+            let e2 = ElementView(title: title, element:  imageView2 as! T, description: "For purly decorative images, we can turn off the accessibiltiy", showViewCode: false)
 
             return [e1,e2]
         case .label:
-            break
+            let label = UILabel()
+            label.text = "Hello, World!"
+            label.font = UIFont.systemFont(ofSize: 16)
+            label.textColor = .black
+
+            // Accessibility Configuration
+            label.accessibilityHint = "Displays a greeting message."
+            label.accessibilityTraits = .staticText
+
+            let e1 = ElementView(title: title, element:  label as! T, description: "By default, VoiceOver announces the text for UILabel , have added Hint and trait", showViewCode: true)
+            return [e1]
         case .textView:
             break
         case .tableView:
@@ -194,7 +204,12 @@ extension UIElement{
             let e1 = ElementView(title: title, element:  imageView as! T, description: "", showViewCode: false)
             return e1
         case .label:
-            break
+            let label = UILabel()
+            label.text = "Hello, World!"
+            label.font = UIFont.systemFont(ofSize: 16)
+            label.textColor = .black
+            let e1 = ElementView(title: title, element:  label as! T, description: "", showViewCode: false)
+            return e1
         case .textView:
             break
         case .tableView:
@@ -249,7 +264,7 @@ extension UIElement{
             ///Hint not taken for this component
             stepper.accessibilityHint = "Use the Stepper to adjust the volume"
             stepper.accessibilityValue = stepper.value.description
-        """
+            """
         case .segmentedControl:
             return """
             let segmentedControl = UISegmentedControl(items: ["Option 1", "Option 2", "Option 3"])
@@ -270,7 +285,7 @@ extension UIElement{
 
             pageControl.accessibilityLabel = "Offers Pages"
             pageControl.accessibilityHint = "Changes different offers card "
-"""
+            """
         case .textField:
             return """
             let textField = UITextField()
@@ -283,7 +298,7 @@ extension UIElement{
             textField.accessibilityLabel = "Text Input Field"
             textField.accessibilityHint = "Search contact records"
             textField.accessibilityTraits = .searchField
-"""
+            """
         case .imageView:
             return """
             let imageView = UIImageView(image: UIImage(resource: .profile))
@@ -296,9 +311,18 @@ extension UIElement{
             imageView.accessibilityLabel = "Profile image"
             imageView.accessibilityHint = "Double tap to edit profile"
             imageView.accessibilityTraits = [.image,.button]
-"""
+            """
         case .label:
-            break
+            return """
+            let label = UILabel()
+            label.text = "Hello, World!"
+            label.font = UIFont.systemFont(ofSize: 16)
+            label.textColor = .black
+
+            // Accessibility Configuration
+            label.accessibilityHint = "Displays a greeting message."
+            label.accessibilityTraits = .staticText
+            """
         case .textView:
             break
         case .tableView:
