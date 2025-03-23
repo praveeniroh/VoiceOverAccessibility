@@ -134,7 +134,24 @@ extension UIElement{
             let e1 = ElementView(title: title, element:  label as! T, description: "By default, VoiceOver announces the text for UILabel , have added Hint and trait", showViewCode: true)
             return [e1]
         case .textView:
-            break
+            let textView = UITextView()
+            textView.text = "This is a sample text."
+            textView.font = UIFont.systemFont(ofSize: 16)
+            textView.textColor = .black
+            textView.isScrollEnabled = true
+            textView.layer.borderWidth = 1
+            textView.layer.borderColor = UIColor.gray.cgColor
+            textView.translatesAutoresizingMaskIntoConstraints = false
+            textView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+
+//            textView.isEditable = false
+
+            // Accessibility Configuration
+            textView.accessibilityLabel = "Description text view"
+            textView.accessibilityHint = "Add description about a record here."
+
+            let e1 = ElementView(title: title, element:  textView as! T, description: "VoiceOver announces UITextView correctly by default. Label and hint are added. If editing is disabled, “Double tap to edit” is not announced.", showViewCode: true)
+            return [e1]
         case .tableView:
             break
         case .customView:
@@ -211,7 +228,19 @@ extension UIElement{
             let e1 = ElementView(title: title, element:  label as! T, description: "", showViewCode: false)
             return e1
         case .textView:
-            break
+            let textView = UITextView()
+            textView.text = "This is a sample text."
+            textView.font = UIFont.systemFont(ofSize: 16)
+            textView.textColor = .black
+            textView.isScrollEnabled = true
+            textView.layer.borderWidth = 1
+            textView.layer.borderColor = UIColor.gray.cgColor
+
+            textView.translatesAutoresizingMaskIntoConstraints = false
+            textView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+
+            let e1 = ElementView(title: title, element:  textView as! T, description: "", showViewCode: false)
+            return e1
         case .tableView:
             break
         case .customView:
@@ -324,7 +353,23 @@ extension UIElement{
             label.accessibilityTraits = .staticText
             """
         case .textView:
-            break
+            return """
+            let textView = UITextView()
+            textView.text = "This is a sample text."
+            textView.font = UIFont.systemFont(ofSize: 16)
+            textView.textColor = .black
+            textView.isScrollEnabled = true
+            textView.layer.borderWidth = 1
+            textView.layer.borderColor = UIColor.gray.cgColor
+            textView.translatesAutoresizingMaskIntoConstraints = false
+            textView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+
+            //textView.isEditable = false
+
+            // Accessibility Configuration
+            textView.accessibilityLabel = "Description text view"
+            textView.accessibilityHint = "Add description about a record here."
+            """
         case .tableView:
             break
         case .customView:
