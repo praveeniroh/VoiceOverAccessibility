@@ -45,7 +45,12 @@ final class UIKitViewController: IUIViewController {
 extension UIKitViewController : ElementsTableViewDelegate {
     func didSelectElement(element: UIElement) {
         print(element.uiKitTitle)
-        let vc = DetailViewController(element: element)
+        let vc : UIViewController
+        if element == .tableView{
+            vc = MyTableViewController()
+        }else{
+            vc = DetailViewController(element: element)
+        }
         navigationController?.pushViewController(vc, animated: true)
     }
 }
