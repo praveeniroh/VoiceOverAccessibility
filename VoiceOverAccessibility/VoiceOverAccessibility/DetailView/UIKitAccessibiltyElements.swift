@@ -61,7 +61,16 @@ extension UIElement{
             let e1 = ElementView(title: title, element: getUIStepper() as! T, description: "Both increment and decrement are treated as buttons. Accessibility label and value are set, but the hint is ignored.", showViewCode: true)
             return [e1]
         case .segmentedControl:
-            break
+            let segmentedControl = UISegmentedControl(items: ["Option 1", "Option 2", "Option 3"])
+            segmentedControl.selectedSegmentIndex = 0
+            segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+            segmentedControl.isAccessibilityElement = true
+            segmentedControl.accessibilityLabel = "Options Selector"
+            segmentedControl.accessibilityHint = "Swipe left or right to select an option."
+
+            let e1 = ElementView(title: title, element:  segmentedControl as! T, description: "Custom accessibility configuration is igonre for UISegmentedControl. Provided Label, hint, and trait are ignored.", showViewCode: true)
+            return [e1]
+
         case .pageControl:
             break
         case .textField:
@@ -111,7 +120,9 @@ extension UIElement{
         case .stepper:
             return ElementView(title: title, element: getUIStepper(needAccessibilty: false) as! T, description: "", showViewCode: false)
         case .segmentedControl:
-            break
+            let segmentedControl = UISegmentedControl(items: ["Option 1", "Option 2", "Option 3"])
+            segmentedControl.selectedSegmentIndex = 0
+            return ElementView(title: title, element: segmentedControl as! T, description: "", showViewCode: false)
         case .pageControl:
             break
         case .textField:
@@ -176,7 +187,14 @@ extension UIElement{
             stepper.accessibilityValue = stepper.value.description
         """
         case .segmentedControl:
-            break
+            return """
+            let segmentedControl = UISegmentedControl(items: ["Option 1", "Option 2", "Option 3"])
+            segmentedControl.selectedSegmentIndex = 0
+            segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+            segmentedControl.isAccessibilityElement = true
+            segmentedControl.accessibilityLabel = "Options Selector"
+            segmentedControl.accessibilityHint = "Swipe left or right to select an option.
+            """
         case .pageControl:
             break
         case .textField:
