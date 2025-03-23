@@ -58,7 +58,8 @@ extension UIElement{
             let e1 = ElementView(title: title, element: slider as! T, description: "Since the default trait type is .adjustable, the \"Adjust Value\" rotor action is available and selected by default when focusing on a UISlider.", showViewCode: true)
             return [e1]
         case .stepper:
-            break
+            let e1 = ElementView(title: title, element: getUIStepper() as! T, description: "Both increment and decrement are treated as buttons. Accessibility label and value are set, but the hint is ignored.", showViewCode: true)
+            return [e1]
         case .segmentedControl:
             break
         case .pageControl:
@@ -108,7 +109,7 @@ extension UIElement{
 
             return ElementView(title: title, element: slider as! T, description: "", showViewCode: false)
         case .stepper:
-            break
+            return ElementView(title: title, element: getUIStepper(needAccessibilty: false) as! T, description: "", showViewCode: false)
         case .segmentedControl:
             break
         case .pageControl:
@@ -163,7 +164,17 @@ extension UIElement{
             slider.accessibilityHint = "Adjusts the volume"
             """
         case .stepper:
-            break
+           return """
+            let stepper = UIStepper()
+            stepper.maximumValue = 100
+            stepper.minimumValue = 0
+            stepper.value = 40
+            stepper.stepValue = 20
+            stepper.accessibilityLabel = "Increase or decrease the Volume"
+            ///Hint not taken for this component
+            stepper.accessibilityHint = "Use the Stepper to adjust the volume"
+            stepper.accessibilityValue = stepper.value.description
+        """
         case .segmentedControl:
             break
         case .pageControl:
@@ -182,5 +193,49 @@ extension UIElement{
             break
         }
         return ""
+    }
+}
+
+extension UIElement{
+    func getUIStepper(needAccessibilty: Bool = true) -> UIView{
+        let container = UIView()
+
+
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 14, weight: .medium)
+
+        let stepper = UIStepper()
+        stepper.maximumValue = 100
+        stepper.minimumValue = 0
+        stepper.value = 40
+        stepper.stepValue = 20
+        label.text = stepper.value.description
+        stepper.addAction(UIAction { action in
+            label.text = stepper.value.description
+            if needAccessibilty{
+                stepper.accessibilityValue = stepper.value.description
+            }
+        }, for: .valueChanged)
+
+        container.addSubview(stepper)
+        container.addSubview(label)
+        stepper.translatesAutoresizingMaskIntoConstraints = false
+        label.translatesAutoresizingMaskIntoConstraints = false
+
+        stepper.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
+        stepper.topAnchor.constraint(equalTo: container.topAnchor).isActive = true
+        stepper.bottomAnchor.constraint(equalTo: container.bottomAnchor).isActive = true
+        label.leadingAnchor.constraint(equalTo: stepper.trailingAnchor, constant: 8).isActive = true
+        label.topAnchor.constraint(equalTo: container.topAnchor).isActive = true
+        label.trailingAnchor.constraint(equalTo: container.trailingAnchor).isActive = true
+        label.bottomAnchor.constraint(equalTo: container.bottomAnchor).isActive = true
+
+        if needAccessibilty{
+            stepper.accessibilityLabel = "Increase or decrease the Volume"
+            ///Hint not taken for this component
+            stepper.accessibilityHint = "Use the Stepper to adjust the volume"
+            stepper.accessibilityValue = stepper.value.description
+        }
+        return container
     }
 }
