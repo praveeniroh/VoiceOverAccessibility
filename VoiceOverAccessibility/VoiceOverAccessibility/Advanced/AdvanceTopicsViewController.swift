@@ -56,7 +56,13 @@ extension AdvancedTopicsViewController: UITableViewDataSource, UITableViewDelega
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let vc = ZigZagLabelsViewController(data: data[indexPath.row])
+        let datum = data[indexPath.row]
+        let vc:UIViewController
+        if datum == .activationPoint{
+            vc = ActivationPointSampleViewController()
+        }else{
+            vc = ZigZagLabelsViewController(data: data[indexPath.row])
+        }
         navigationController?.pushViewController(vc, animated: true)
     }
 }
