@@ -16,7 +16,8 @@ class ContainerViewController: UITabBarController {
 
         viewControllers = [
             INavigationController(rootViewController: UIKitViewController()),
-            INavigationController(rootViewController: SwiftUIViewController())
+            INavigationController(rootViewController: SwiftUIViewController()),
+            INavigationController(rootViewController: AdvancedTopicsViewController())
         ]
 
         let appearance = UITabBarAppearance()
@@ -24,6 +25,7 @@ class ContainerViewController: UITabBarController {
         appearance.backgroundColor = .systemGray6
         tabBar.standardAppearance = appearance
         tabBar.scrollEdgeAppearance = appearance
+        selectedIndex = 2
     }
 
 

@@ -8,7 +8,7 @@
 import UIKit
 
 
-class MyTableViewController: IUIViewController,UITableViewDelegate,UITableViewDataSource {
+final class MyTableViewController: IUIViewController,UITableViewDelegate,UITableViewDataSource {
     private let optionSegmentButton : UISegmentedControl = {
         let segment = UISegmentedControl(items: ["Optimzed", "Default"])
         segment.selectedSegmentIndex = 0
