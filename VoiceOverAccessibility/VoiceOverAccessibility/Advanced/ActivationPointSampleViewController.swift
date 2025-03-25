@@ -30,10 +30,16 @@ class ActivationPointSampleViewController: UIViewController, UITableViewDelegate
         return label
     }()
 
+    private lazy var codeNavBarItem: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(title: "Code", style: .plain, target: self, action: #selector(codeNavigationButtonTapped))
+        return barButtonItem
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Activation Point"
         view.backgroundColor = .systemGray5
+        navigationItem.rightBarButtonItem = codeNavBarItem
 
         addSubviews()
     }
@@ -70,6 +76,10 @@ class ActivationPointSampleViewController: UIViewController, UITableViewDelegate
 
     @objc private func optionSegmentButtonTapped(){
         tableView.reloadData()
+    }
+
+    @objc private func codeNavigationButtonTapped() {
+        navigationController?.pushViewController(CodeViewController(codeString: AdvancedTopics.activationPoint.code), animated: true)
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -17,9 +17,14 @@ final class ZigZagLabelsViewController: UIViewController {
     private var greenLabels: [UILabel] = []
 
     private let optionSegmentButton : UISegmentedControl = {
-        let segment = UISegmentedControl(items: ["Optimzed", "Default"])
+        let segment = UISegmentedControl(items: ["Optimized", "Default"])
         segment.selectedSegmentIndex = 0
         return segment
+    }()
+
+    private lazy var codeNavBarItem: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(title: "Code", style: .plain, target: self, action: #selector(codeNavigationButtonTapped))
+        return barButtonItem
     }()
 
     private var descriptionLabel : UILabel = {
@@ -47,6 +52,7 @@ final class ZigZagLabelsViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemGray6
         title = data.title
+        navigationItem.rightBarButtonItem = codeNavBarItem
         addSubViews()
         configureAccessibility()
     }
@@ -118,6 +124,10 @@ final class ZigZagLabelsViewController: UIViewController {
 
             previousLabel = label
         }
+    }
+
+    @objc private func codeNavigationButtonTapped() {
+        navigationController?.pushViewController(CodeViewController(codeString: data.code), animated: true)
     }
 
     @objc private func optionSegmentButtonTapped(){
