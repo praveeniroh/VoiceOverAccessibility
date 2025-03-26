@@ -14,6 +14,9 @@ extension UIElement{
         switch self {
         case .button:
 
+            ///By default, VoiceOver announces a `UIButton`’s title along with the Button trait. In most cases,
+            ///if the title is descriptive, no additional accessibility data is needed.
+            /// However, if the button lacks a title or has a non-descriptive one, you should set an `accessibilityLabel` and `accessibilityHint`.
             let button = UIButton()
             button.setTitle("Edit", for: .normal)
             button.backgroundColor = .green
@@ -35,7 +38,14 @@ extension UIElement{
             let e2 = ElementView(title: title, element: button2 as! T, description: "For buttons with an image, set an accessibilityLabel to ensure VoiceOver announces the text. Additionally, provide an accessibilityHint if needed.", showViewCode: true)
             return [e1,e2]
 
+///`------------------------------------------------------------------------------------------------------------------`
+
         case .switchElement:
+
+            ///By default, VoiceOver announces a `UISwitch` with its state (On/Off) and the `toggleButton` trait.
+            ///If needed, you can provide an `accessibilityLabel` for context and an `accessibilityHint` for additional guidance, and a custom `accessibilityValue` to provide a more descriptive state representation instead of On/Off..
+            ///Announcement order : `accessibilityLabel` >> `Switch` Button(trait) >> `On/Off `>> `accessibilityHint` >> `Double tap to toggle settings `(system announcement)
+
             let uiSwitch = UISwitch()
             uiSwitch.isOn = true
             uiSwitch.onTintColor = .systemGreen
@@ -44,7 +54,13 @@ extension UIElement{
 
             let e1 = ElementView(title: title, element: uiSwitch as! T, description: "UISwitch mostly used in UITableViewCell. For demo purpose i've shown separately", showViewCode: true)
             return [e1]
+
+///`==================================================================================================================`
+
         case .slider:
+
+            ///By default, VoiceOver announces a `UISlider` with its value, and the `Adjustable` trait. Users can adjust the value using up/down  swipe gestures. To enhance accessibility, you can set an `accessibilityLabel` for context, an `accessibilityHint` for guidance, and a custom `accessibilityValue` to provide a more descriptive representation of the slider’s state.
+            ///Annoucement order : `accessibilityLabel` >>  `value` >> `adjustable`(trait) >> `accessibilityHint`
             let slider = UISlider()
             slider.maximumValue = 100
             slider.minimumValue = 0
@@ -52,15 +68,29 @@ extension UIElement{
             slider.minimumTrackTintColor = .systemGreen
             slider.minimumValueImage = UIImage(systemName: "speaker.fill")
             slider.maximumValueImage = UIImage(systemName: "speaker.wave.3.fill")
+
+            //Accessibility configuration
             slider.accessibilityLabel = "Volume slider"
             slider.accessibilityHint = "Adjusts the volume"
-            slider.value = 50
+            slider.value = 50 //Setting the value before configuring accessibility prevents VoiceOver from announcing it properly
+
             let e1 = ElementView(title: title, element: slider as! T, description: "Since the default trait type is .adjustable, the \"Adjust Value\" rotor action is available and selected by default when focusing on a UISlider.", showViewCode: true)
             return [e1]
+
+///`==================================================================================================================`
+
         case .stepper:
+
             let e1 = ElementView(title: title, element: getUIStepper() as! T, description: "Both increment and decrement are treated as buttons. Accessibility label and value are set, but the hint is ignored.", showViewCode: true)
             return [e1]
+
+///`==================================================================================================================`
+
         case .segmentedControl:
+
+            ///By default, VoiceOver announces a `UISegmentedControl` with its selected segment.
+            ///However, if a custom `accessibilityLabel`, `accessibilityHint`, or `trait` is provided, they are ignored.
+            ///Announcement order : `Selected`(if selected option focused)>> `Option 1`(index of item) >> `Button`(trait) >> `1 of 3` (index + total options)
             let segmentedControl = UISegmentedControl(items: ["Option 1", "Option 2", "Option 3"])
             segmentedControl.selectedSegmentIndex = 0
             segmentedControl.translatesAutoresizingMaskIntoConstraints = false
@@ -70,6 +100,8 @@ extension UIElement{
 
             let e1 = ElementView(title: title, element:  segmentedControl as! T, description: "Custom accessibility configuration is igonre for UISegmentedControl. Provided Label, hint, and trait are ignored.", showViewCode: true)
             return [e1]
+
+///`==================================================================================================================`
 
         case .pageControl:
             let pageControl = UIPageControl()
@@ -113,12 +145,10 @@ extension UIElement{
             imageView2.heightAnchor.constraint(equalToConstant: 100).isActive = true
             imageView2.widthAnchor.constraint(equalToConstant: 100).isActive = true
 
-            // Accessibility Configuration
-            imageView2.isAccessibilityElement = false
 
             let e1 = ElementView(title: title, element:  imageView as! T, description: "In this example, custom label,trait and hint set", showViewCode: true)
 
-            let e2 = ElementView(title: title, element:  imageView2 as! T, description: "For purly decorative images, we can turn off the accessibiltiy", showViewCode: false)
+            let e2 = ElementView(title: title, element:  imageView2 as! T, description: "For purely decorative images, we can avoid making them accessibility elements or explicitly disable accessibility. By default, a UIImageView is not accessible.", showViewCode: false)
 
             return [e1,e2]
         case .label:
@@ -211,7 +241,7 @@ extension UIElement{
             pageControl.pageIndicatorTintColor = .secondaryLabel
             pageControl.currentPageIndicatorTintColor = .systemBlue
 
-            let e1 = ElementView(title: title, element:  pageControl as! T, description: "", showViewCode: true)
+            let e1 = ElementView(title: title, element:  pageControl as! T, description: "", showViewCode: false)
             return e1
         case .textField:
             let textField = UITextField()
@@ -227,7 +257,7 @@ extension UIElement{
             imageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
             imageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
 
-            let e1 = ElementView(title: title, element:  imageView as! T, description: "", showViewCode: false)
+            let e1 = ElementView(title: title, element:  imageView as! T, description: "By default, a UIImageView is not accessible.", showViewCode: false)
             return e1
         case .label:
             let label = UILabel()
@@ -406,6 +436,9 @@ extension UIElement{
         let label = UILabel()
         label.font = .systemFont(ofSize: 14, weight: .medium)
 
+        ///By default, VoiceOver announces a `UIStepper` with its current value . It provides Increment and Decrement actions as buttons. If needed, you can set an `accessibilityLabel` for context . You can also provide a custom `accessibilityValue` for better clarity.
+        /// `accessibilityHint` value ignored.
+        ///Order : accessibilityLabel >> Increment/Decrement  >> value or accessibilityValue >> Button(trait0
         let stepper = UIStepper()
         stepper.maximumValue = 100
         stepper.minimumValue = 0
