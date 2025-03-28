@@ -90,7 +90,7 @@ extension UIElement{
 
             ///By default, VoiceOver announces a `UISegmentedControl` with its selected segment.
             ///However, if a custom `accessibilityLabel`, `accessibilityHint`, or `trait` is provided, they are ignored.
-            ///Announcement order : `Selected`(if selected option focused)>> `Option 1`(index of item) >> `Button`(trait) >> `1 of 3` (index + total options)
+            ///Announcement order : `Selected`(if selected option focused)>> `Option 1`(title of item) >> `Button`(trait) >> `1 of 3` (index + total options)
             let segmentedControl = UISegmentedControl(items: ["Option 1", "Option 2", "Option 3"])
             segmentedControl.selectedSegmentIndex = 0
             segmentedControl.translatesAutoresizingMaskIntoConstraints = false
@@ -104,6 +104,10 @@ extension UIElement{
 ///`==================================================================================================================`
 
         case .pageControl:
+
+            ///By default, VoiceOver announces a `UIPageControl` with its current page and total number of pages. It uses the `adjustable` trait, allowing users to navigate between pages using swipe up/down gestures.
+            ///VoiceOver announces the provided label, value, and hint but ignores any custom traits.
+            ///Annoucement order : `accessibilityLabel` >> `accessibilityValue` >> `adjustable`(trait) >> `accessibilityHint` >> `swipe up/down with one finger to adjust value`(system announcement)
             let pageControl = UIPageControl()
             pageControl.numberOfPages = 5
             pageControl.currentPage = 0
@@ -113,22 +117,41 @@ extension UIElement{
 
             pageControl.accessibilityLabel = "Offers Pages"
             pageControl.accessibilityHint = "Changes different offers card "
+            pageControl.accessibilityValue = "page" + "\(pageControl.currentPage + 1)"
+            pageControl.accessibilityTraits = .button
             let e1 = ElementView(title: title, element:  pageControl as! T, description: "By default value announced Properly.In this example, custom labe and hint set", showViewCode: true)
             return [e1]
+
+///`==================================================================================================================`
+
         case .textField:
+
+            ///By default VoiceOver announces Placeholder value of text field and it's editable status
+            ///Additionaly we can set custom properties like `accessibilityLabel`, `accessibilityHint` , `accessibilityValue` , `accessibilityTraits`
+            ///Annoucement order : `accessibilityLabel` >> `accessibilityValue` >> `dimmed` (is disabled) >> `accessibilityTraits` >> `accessibilityHint` >> `Double tap to edit`(if editable)
             let textField = UITextField()
             textField.placeholder = "Enter search text"
             textField.borderStyle = .roundedRect
+            textField.text = "Hello"
+            //textField.isEnabled = false
 
             // Accessibility Configuration
-            textField.isAccessibilityElement = true
-            textField.accessibilityLabel = "Text Input Field"
+            textField.accessibilityLabel = "Search Input Field"
             textField.accessibilityHint = "Search contact records"
-            textField.accessibilityTraits = .searchField
+            textField.accessibilityValue = "search value \(textField.text ?? "nil")"
+            textField.accessibilityTraits = [.searchField,.header]
 
             let e1 = ElementView(title: title, element:  textField as! T, description: "In this example, custom label,trait and hint set", showViewCode: true)
             return [e1]
+
+///`==================================================================================================================`
+
         case .imageView:
+
+            ///By default, `UIImageView` is not accessible to VoiceOver. To make it accessible, set `isAccessibilityElement = true`.
+            ///For decorative images, keep them non-accessible or explicitly disable accessibility.
+            ///If the image conveys important information, provide an `accessibilityLabel` and other relevant accessibility attributes to ensure proper announcement.
+            ///Annoucement order : `accessibilityLabel` >> `accessibilityValue` >> `accessibilityTraits` >> `accessibilityHint`
             let imageView = UIImageView(image: UIImage(resource: .profile))
             imageView.translatesAutoresizingMaskIntoConstraints = true
             imageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
@@ -136,8 +159,9 @@ extension UIElement{
 
             // Accessibility Configuration
             imageView.isAccessibilityElement = true
-            imageView.accessibilityLabel = "Profile image"
+            imageView.accessibilityLabel = "Profile"
             imageView.accessibilityHint = "Double tap to edit profile"
+            imageView.accessibilityValue = "Empty profile view"
             imageView.accessibilityTraits = [.image,.button]
 
             let imageView2 = UIImageView(image: UIImage(resource: .decorative))
@@ -151,19 +175,32 @@ extension UIElement{
             let e2 = ElementView(title: title, element:  imageView2 as! T, description: "For purely decorative images, we can avoid making them accessibility elements or explicitly disable accessibility. By default, a UIImageView is not accessible.", showViewCode: false)
 
             return [e1,e2]
+
+///`==================================================================================================================`
+
         case .label:
+
+            ///By default, VoiceOver annouces the text in the UILabel
+            ///Additionally can take accessibility properties like `accesibilityHint` & `accessibilityTraits`
+            ///- Note : Don't provide `accessibilityLabel` unless it necessary, since it will override the existing text value
+            ///Announcement order : default VoiceOver order
             let label = UILabel()
             label.text = "Hello, World!"
             label.font = UIFont.systemFont(ofSize: 16)
-            label.textColor = .black
 
             // Accessibility Configuration
             label.accessibilityHint = "Displays a greeting message."
-            label.accessibilityTraits = .staticText
-
+            label.accessibilityTraits = .link // Default for UILabel is staticText.Other possible traits: .header, .button, .link, .selected, etc.
             let e1 = ElementView(title: title, element:  label as! T, description: "By default, VoiceOver announces the text for UILabel , have added Hint and trait", showViewCode: true)
             return [e1]
+
+///`==================================================================================================================`
+
         case .textView:
+            ///By default VoiceOver announces UITextView's text , trait (Text field - Not exposed in UIAccessibilityTrait) , editing text
+            ///and rotor action to jump to misspelt words
+            ///e.g. Hello world, Text field , Double tap to edit , Use rotor to access misspelt words
+            ///Additionally we can set other accessibility properties. Be causious while setting custom traits,  since default `TextField`trait is not exposed
             let textView = UITextView()
             textView.text = "This is a sample text."
             textView.font = UIFont.systemFont(ofSize: 16)
@@ -179,12 +216,23 @@ extension UIElement{
             // Accessibility Configuration
             textView.accessibilityLabel = "Description text view"
             textView.accessibilityHint = "Add description about a record here."
+//            textView.accessibilityTraits = .staticText
 
             let e1 = ElementView(title: title, element:  textView as! T, description: "VoiceOver announces UITextView correctly by default. Label and hint are added. If editing is disabled, “Double tap to edit” is not announced.", showViewCode: true)
             return [e1]
+
+///`==================================================================================================================`
+
         case .tableView:
             break
+
+///`==================================================================================================================`
+
         case .customView:
+
+            ///By default, a custom UIView subclass is not accessible. To enable accessibility, we set `isAccessibilityElement = true`, which treats the entire view as a single accessible element, making its subviews inaccessible.
+            ///To ensure proper VoiceOver support, we should provide a meaningful `accessibilityLabel` for announcement.
+            ///Additionally, we can define `accessibilityTraits` and an `accessibilityHint` to enhance the user experience.
             let customView = CustomButtonView()
 
             //Accessibility Configs
@@ -345,7 +393,7 @@ extension UIElement{
             segmentedControl.accessibilityHint = "Swipe left or right to select an option.
             """
         case .pageControl:
-            return """
+            return #"""
             let pageControl = UIPageControl()
             pageControl.numberOfPages = 5
             pageControl.currentPage = 0
@@ -355,20 +403,23 @@ extension UIElement{
 
             pageControl.accessibilityLabel = "Offers Pages"
             pageControl.accessibilityHint = "Changes different offers card "
-            """
+            pageControl.accessibilityValue = "page" + \"(pageControl.currentPage + 1)"
+            pageControl.accessibilityTraits = .button
+            """#
         case .textField:
-            return """
+            return #"""
             let textField = UITextField()
             textField.placeholder = "Enter search text"
             textField.borderStyle = .roundedRect
-            textField.translatesAutoresizingMaskIntoConstraints = false
+            textField.text = "Hello"
+            //textField.isEnabled = false
 
             // Accessibility Configuration
-            textField.isAccessibilityElement = true
-            textField.accessibilityLabel = "Text Input Field"
+            textField.accessibilityLabel = "Search Input Field"
             textField.accessibilityHint = "Search contact records"
-            textField.accessibilityTraits = .searchField
-            """
+            textField.accessibilityValue = "search value \(textField.text ?? "nil")"
+            textField.accessibilityTraits = [.searchField,.header]
+            """#
         case .imageView:
             return """
             let imageView = UIImageView(image: UIImage(resource: .profile))
@@ -378,8 +429,9 @@ extension UIElement{
 
             // Accessibility Configuration
             imageView.isAccessibilityElement = true
-            imageView.accessibilityLabel = "Profile image"
+            imageView.accessibilityLabel = "Profile"
             imageView.accessibilityHint = "Double tap to edit profile"
+            imageView.accessibilityValue = "Empty profile view"
             imageView.accessibilityTraits = [.image,.button]
             """
         case .label:
@@ -391,7 +443,7 @@ extension UIElement{
 
             // Accessibility Configuration
             label.accessibilityHint = "Displays a greeting message."
-            label.accessibilityTraits = .staticText
+            label.accessibilityTraits = .link // default trait is staticTrait
             """
         case .textView:
             return """
