@@ -8,16 +8,10 @@
 
 import UIKit
 
-class ActivationPointSampleViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ActivationPointSampleViewController: OptionsViewController, UITableViewDelegate, UITableViewDataSource {
 
     private let tableView = UITableView(frame: .zero, style: .insetGrouped)
     private let items = ["Wi-Fi", "Bluetooth", "Airplane Mode", "Dark Mode"]
-
-    private let optionSegmentButton : UISegmentedControl = {
-        let segment = UISegmentedControl(items: ["Optimized", "Default"])
-        segment.selectedSegmentIndex = 0
-        return segment
-    }()
 
     private var descriptionLabel : UILabel = {
         let label = UILabel()
@@ -30,29 +24,17 @@ class ActivationPointSampleViewController: UIViewController, UITableViewDelegate
         return label
     }()
 
-    private lazy var codeNavBarItem: UIBarButtonItem = {
-        let barButtonItem = UIBarButtonItem(title: "Code", style: .plain, target: self, action: #selector(codeNavigationButtonTapped))
-        return barButtonItem
-    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Activation Point"
         view.backgroundColor = .systemGray5
-        navigationItem.rightBarButtonItem = codeNavBarItem
 
         addSubviews()
     }
 
     private func addSubviews() {
-        view.addSubview(optionSegmentButton)
-        optionSegmentButton.translatesAutoresizingMaskIntoConstraints = false
-        optionSegmentButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 20).isActive = true
-        optionSegmentButton.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor).isActive = true
-        optionSegmentButton.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor).isActive = true
-        optionSegmentButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-
-        optionSegmentButton.addTarget(self, action: #selector(optionSegmentButtonTapped), for: .valueChanged)
+        super.addSubViews()
 
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -62,7 +44,7 @@ class ActivationPointSampleViewController: UIViewController, UITableViewDelegate
         tableView.dataSource = self
         tableView.register(SwitchTableViewCell.self, forCellReuseIdentifier: "switchCell")
         
-        tableView.topAnchor.constraint(equalTo: optionSegmentButton.bottomAnchor, constant: 0).isActive = true
+        tableView.topAnchor.constraint(equalTo: segmentControlBottomAnchor ?? view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
 
@@ -74,11 +56,11 @@ class ActivationPointSampleViewController: UIViewController, UITableViewDelegate
         descriptionLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
     }
 
-    @objc private func optionSegmentButtonTapped(){
+    @objc override func optionSegmentButtonTapped(){
         tableView.reloadData()
     }
 
-    @objc private func codeNavigationButtonTapped() {
+    @objc override func codeNavigationButtonTapped() {
         navigationController?.pushViewController(CodeViewController(codeString: AdvancedTopics.activationPoint.code), animated: true)
     }
 
@@ -90,7 +72,7 @@ class ActivationPointSampleViewController: UIViewController, UITableViewDelegate
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "switchCell", for: indexPath) as? SwitchTableViewCell else {
             return UITableViewCell()
         }
-        cell.configure(title: items[indexPath.row], needAccessibility: optionSegmentButton.selectedSegmentIndex == 0 ? true : false)
+        cell.configure(title: items[indexPath.row], needAccessibility: selectedOption == .optimized ? true : false)
         return cell
     }
 }

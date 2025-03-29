@@ -8,24 +8,13 @@
 
 import UIKit
 
-final class ZigZagLabelsViewController: UIViewController {
+final class ZigZagLabelsViewController: OptionsViewController {
     private let GREEN_ROTOR_NAME = "Green Rotor"
     private let RED_ROTOR_NAME = "Red Rotor"
 
     private var subViews = [UILabel]()
     private var redLabels: [UILabel] = []
     private var greenLabels: [UILabel] = []
-
-    private let optionSegmentButton : UISegmentedControl = {
-        let segment = UISegmentedControl(items: ["Optimized", "Default"])
-        segment.selectedSegmentIndex = 0
-        return segment
-    }()
-
-    private lazy var codeNavBarItem: UIBarButtonItem = {
-        let barButtonItem = UIBarButtonItem(title: "Code", style: .plain, target: self, action: #selector(codeNavigationButtonTapped))
-        return barButtonItem
-    }()
 
     private var descriptionLabel : UILabel = {
         let label = UILabel()
@@ -52,20 +41,12 @@ final class ZigZagLabelsViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemGray6
         title = data.title
-        navigationItem.rightBarButtonItem = codeNavBarItem
         addSubViews()
         configureAccessibility()
     }
 
-    private func addSubViews() {
-        view.addSubview(optionSegmentButton)
-        optionSegmentButton.translatesAutoresizingMaskIntoConstraints = false
-        optionSegmentButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 20).isActive = true
-        optionSegmentButton.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor).isActive = true
-        optionSegmentButton.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor).isActive = true
-        optionSegmentButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-
-        optionSegmentButton.addTarget(self, action: #selector(optionSegmentButtonTapped), for: .valueChanged)
+    override func addSubViews() {
+        super.addSubViews()
 
         setupZigZagLabels()
 
@@ -113,7 +94,7 @@ final class ZigZagLabelsViewController: UIViewController {
             } else {
                 NSLayoutConstraint.activate([
                     label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -125),
-                    label.topAnchor.constraint(equalTo: optionSegmentButton.bottomAnchor, constant: 20)
+                    label.topAnchor.constraint(equalTo: segmentControlBottomAnchor ?? view.safeAreaLayoutGuide.topAnchor, constant: 20)
                 ])
             }
 
@@ -126,19 +107,29 @@ final class ZigZagLabelsViewController: UIViewController {
         }
     }
 
-    @objc private func codeNavigationButtonTapped() {
+    @objc override func codeNavigationButtonTapped() {
         navigationController?.pushViewController(CodeViewController(codeString: data.code), animated: true)
     }
 
-    @objc private func optionSegmentButtonTapped(){
+    @objc override func optionSegmentButtonTapped(){
         configureAccessibility()
     }
 
     private func configureAccessibility() {
-        if optionSegmentButton.selectedSegmentIndex == 0 {
+        switch selectedOption{
+        case .defaultOption:
+            accessibilityElements = nil
+            subViews.forEach{
+                $0.accessibilityCustomActions = nil
+            }
+            view.accessibilityCustomRotors = view.accessibilityCustomRotors?.filter{
+                $0.name != self.GREEN_ROTOR_NAME && $0.name != self.RED_ROTOR_NAME
+            }
+            accessibilityCustomActions = nil
+        case .optimized:
             switch data {
             case .changingDefaultOrder:
-                accessibilityElements = [optionSegmentButton,subViews[2],subViews[1],subViews[5],subViews[0],subViews[3],subViews[4],descriptionLabel]
+                accessibilityElements = (super.automationElements ?? []) + [subViews[2],subViews[1],subViews[5],subViews[0],subViews[3],subViews[4],descriptionLabel]
             case .customActions:
                 addCustomActions()
             case .customRotors:
@@ -148,15 +139,8 @@ final class ZigZagLabelsViewController: UIViewController {
             case .moreContent:
                 return
             }
-        }else{
-            accessibilityElements = nil
-            subViews.forEach{
-                $0.accessibilityCustomActions = nil
-            }
-            view.accessibilityCustomRotors = view.accessibilityCustomRotors?.filter{
-                $0.name != self.GREEN_ROTOR_NAME && $0.name != self.RED_ROTOR_NAME
-            }
-            accessibilityCustomActions = nil
+        case .none:
+            break
         }
         setDescription()
     }
@@ -234,15 +218,15 @@ extension ZigZagLabelsViewController{
     private func setDescription(){
         switch data{
         case .changingDefaultOrder:
-            descriptionLabel.text = optionSegmentButton.selectedSegmentIndex == 0 ? "By default, VoiceOver navigates items from left to right and top to bottom. In this case, the default order has been overridden.Swipe left/right to navigate through the labels." : "By default, VoiceOver navigates items from left to right and top to bottom.Swipe left/right to navigate through the labels."
+            descriptionLabel.text = selectedOption == .optimized ? "By default, VoiceOver navigates items from left to right and top to bottom. In this case, the default order has been overridden.Swipe left/right to navigate through the labels.While overriding the order, subviews not included in accessibilityElements become inaccessible., " : "By default, VoiceOver navigates items from left to right and top to bottom.Swipe left/right to navigate through the labels."
         case .customActions:
-            descriptionLabel.text = optionSegmentButton.selectedSegmentIndex == 0 ? "By default elements don't have any custom actions.VoiceOver announces `Swipe up/down to select a customview , double tap to activate`" : "Default behavios. Don't have any Custom Actions"
+            descriptionLabel.text = selectedOption == .optimized ? "By default elements don't have any custom actions.VoiceOver announces `Swipe up/down to select a customview , double tap to activate`" : "Default behavios. Don't have any Custom Actions"
         case .customRotors:
-            descriptionLabel.text = optionSegmentButton.selectedSegmentIndex == 0 ? "A rotor action is set on the ViewController’s main view. When focusing on any element within the view, VoiceOver announces the available rotors the first time. In this example, navigating between the Green and Red labels demonstrates this behavior." : "By default No rotor action set."
+            descriptionLabel.text = selectedOption == .optimized ? "A rotor action is set on the ViewController’s main view. When focusing on any element within the view, VoiceOver announces the available rotors the first time. In this example, navigating between the Green and Red labels demonstrates this behavior." : "By default No rotor action set."
         case .activationPoint:
-            descriptionLabel.text = optionSegmentButton.selectedSegmentIndex == 0 ? "" : ""
+            break
         case .moreContent:
-            descriptionLabel.text = optionSegmentButton.selectedSegmentIndex == 0 ? "" : ""
+            descriptionLabel.text = selectedOption == .optimized ? "" : ""
         }
     }
 }
