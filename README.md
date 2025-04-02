@@ -1,4 +1,4 @@
-![photo-collage-Photoroom](https://github.com/user-attachments/assets/916be927-f0e2-4e2c-8e5b-11db67b1bf33)# VoiceOverAccessibility
+# VoiceOverAccessibility
 This repository focuses on enhancing VoiceOver support in iOS apps using UIAccessibility APIs. It includes custom labels, traits, actions, rotors, and element grouping to improve navigation and user experience for visually impaired users in UIKit and SwiftUI.
 
 ## 🚀 How to Use This Repository
@@ -16,7 +16,7 @@ This repository focuses on enhancing VoiceOver support in iOS apps using UIAcces
 
 To explore the behavior of basic UI elements, open the UIKit tab in the Demo app and select the desired element. You’ll see both the default behavior and an optimized accessibility configuration. Additionally, a code example is provided to demonstrate the improved accessibility setup for the selected view.
 
-![photo-collage-Photoroom](https://github.com/user-attachments/assets/94791bb1-7b3a-4a2d-b93b-b08f15419ca6)
+![VoiceOver Accessibility Title@3x](https://github.com/user-attachments/assets/8546dccc-ef1a-4657-aab4-01b44f056ad6)
 
 
 ## Basic Accessibility Properties
