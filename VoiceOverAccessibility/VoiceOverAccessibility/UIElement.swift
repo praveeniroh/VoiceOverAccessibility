@@ -24,7 +24,6 @@ enum UIElement{
     case label
     case textView
 
-    case tableView
     case customView
 
     var uiKitTitle: String {
@@ -49,8 +48,6 @@ enum UIElement{
             return "UILabel"
         case .textView:
             return "UITextView"
-        case .tableView:
-            return "UITableView"
         case .customView:
             return "CustomView"
         }
@@ -78,8 +75,6 @@ enum UIElement{
             return "Text"
         case .textView:
             return ""
-        case .tableView:
-            return "List"
         case .customView:
             return "CustomView"
         }

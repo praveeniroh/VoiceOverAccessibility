@@ -135,9 +135,13 @@ final class ZigZagLabelsViewController: OptionsViewController {
             case .customRotors:
                 addAccessibilityRotorAction()
             case .activationPoint:
+                //Handled in separate view controller
                 return
             case .moreContent:
                 return
+            case .tableView:
+                //Handled in separate view controller
+                break
             }
         case .none:
             break
@@ -223,10 +227,10 @@ extension ZigZagLabelsViewController{
             descriptionLabel.text = selectedOption == .optimized ? "By default elements don't have any custom actions.VoiceOver announces `Swipe up/down to select a customview , double tap to activate`" : "Default behavios. Don't have any Custom Actions"
         case .customRotors:
             descriptionLabel.text = selectedOption == .optimized ? "A rotor action is set on the ViewController’s main view. When focusing on any element within the view, VoiceOver announces the available rotors the first time. In this example, navigating between the Green and Red labels demonstrates this behavior." : "By default No rotor action set."
-        case .activationPoint:
-            break
         case .moreContent:
             descriptionLabel.text = selectedOption == .optimized ? "" : ""
+        case .activationPoint,.tableView:
+            break
         }
     }
 }

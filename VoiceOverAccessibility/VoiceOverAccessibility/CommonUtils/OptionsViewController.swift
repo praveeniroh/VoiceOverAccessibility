@@ -12,7 +12,7 @@ enum ComparisionOption : String,CaseIterable{
     case defaultOption = "Default"
 }
 
-class OptionsViewController : UIViewController{
+class OptionsViewController : IUIViewController{
     private lazy var optionSegmentButton : UISegmentedControl = {
         let segment = UISegmentedControl(items: ComparisionOption.allCases.map({$0.rawValue}))
         segment.selectedSegmentIndex = 0

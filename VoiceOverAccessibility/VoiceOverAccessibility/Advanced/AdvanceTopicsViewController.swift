@@ -60,6 +60,8 @@ extension AdvancedTopicsViewController: UITableViewDataSource, UITableViewDelega
         let vc:UIViewController
         if datum == .activationPoint{
             vc = ActivationPointSampleViewController()
+        }else if datum == .tableView{
+            vc = CustomTableViewController()
         }else{
             vc = ZigZagLabelsViewController(data: data[indexPath.row])
         }

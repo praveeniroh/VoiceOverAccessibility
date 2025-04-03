@@ -132,7 +132,7 @@ extension UIElement{
             let textField = UITextField()
             textField.placeholder = "Enter search text"
             textField.borderStyle = .roundedRect
-            textField.text = "Hello"
+//            textField.text = "Hello"
             //textField.isEnabled = false
 
             // Accessibility Configuration
@@ -140,6 +140,7 @@ extension UIElement{
             textField.accessibilityHint = "Search contact records"
             textField.accessibilityValue = "search value \(textField.text ?? "nil")"
             textField.accessibilityTraits = [.searchField,.header]
+            textField.accessibilityUserInputLabels = ["Email","Phone"]
 
             let e1 = ElementView(title: title, element:  textField as! T, description: "In this example, custom label,trait and hint set", showViewCode: true)
             return [e1]
@@ -220,11 +221,6 @@ extension UIElement{
 
             let e1 = ElementView(title: title, element:  textView as! T, description: "VoiceOver announces UITextView correctly by default. Label and hint are added. If editing is disabled, “Double tap to edit” is not announced.", showViewCode: true)
             return [e1]
-
-///`==================================================================================================================`
-
-        case .tableView:
-            break
 
 ///`==================================================================================================================`
 
@@ -328,8 +324,6 @@ extension UIElement{
 
             let e1 = ElementView(title: title, element:  textView as! T, description: "", showViewCode: false)
             return e1
-        case .tableView:
-            break
         case .customView:
             let customView = CustomButtonView()
             let e1 = ElementView(title: title, element:  customView as! T, description: "", showViewCode: false)
@@ -463,8 +457,6 @@ extension UIElement{
             textView.accessibilityLabel = "Description text view"
             textView.accessibilityHint = "Add description about a record here."
             """
-        case .tableView:
-            break
         case .customView:
             return """
             let customView = CustomButtonView()

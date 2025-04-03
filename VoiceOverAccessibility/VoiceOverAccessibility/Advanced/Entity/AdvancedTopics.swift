@@ -6,6 +6,7 @@
 //
 
 enum AdvancedTopics:CaseIterable{
+    case tableView
     case changingDefaultOrder
     case customActions
     case customRotors
@@ -14,6 +15,8 @@ enum AdvancedTopics:CaseIterable{
 
     var title: String {
         switch self {
+        case .tableView:
+            return "Table View"
         case .changingDefaultOrder:
             return "Chaging Default Focus Order"
         case .customActions:
@@ -29,6 +32,8 @@ enum AdvancedTopics:CaseIterable{
 
     var code : String{
         switch self {
+        case .tableView:
+            return ""
         case .changingDefaultOrder:
             return """
                 accessibilityElements = [optionSegmentButton,subViews[2],subViews[1],subViews[5],subViews[0],subViews[3],subViews[4],descriptionLabel]

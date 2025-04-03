@@ -25,7 +25,7 @@ class ContainerViewController: UITabBarController {
         appearance.backgroundColor = .systemGray6
         tabBar.standardAppearance = appearance
         tabBar.scrollEdgeAppearance = appearance
-        selectedIndex = 0
+        selectedIndex = 2
     }
 
 

@@ -8,7 +8,7 @@
 import UIKit
 
 final class UIKitViewController: IUIViewController {
-    private let elements : [UIElement] = [.button,.switchElement,.slider,.stepper,.segmentedControl,.pageControl,.textField,.imageView,.label,.textView,.customView,.tableView]
+    private let elements : [UIElement] = [.button,.switchElement,.slider,.stepper,.segmentedControl,.pageControl,.textField,.imageView,.label,.textView,.customView]
 
     private lazy var tableView = ElementsTableView(elements: elements, framework: .UIKit)
 
@@ -44,13 +44,7 @@ final class UIKitViewController: IUIViewController {
 
 extension UIKitViewController : ElementsTableViewDelegate {
     func didSelectElement(element: UIElement) {
-        print(element.uiKitTitle)
-        let vc : UIViewController
-        if element == .tableView{
-            vc = MyTableViewController()
-        }else{
-            vc = DetailViewController(element: element)
-        }
+        let vc = DetailViewController(element: element)
         navigationController?.pushViewController(vc, animated: true)
     }
 }
